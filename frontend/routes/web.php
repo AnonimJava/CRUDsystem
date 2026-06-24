@@ -27,3 +27,9 @@ Route::get('/shipments', [ShipmentController::class, 'index']);
 Route::get('/shipments/create', [ShipmentController::class, 'create']);
 
 Route::post('/shipments', [ShipmentController::class, 'store']);
+
+Route::delete('/shipments/{id}', [ShipmentController::class, 'destroy']);
+
+Route::get('/shipments/{id}/edit',[ShipmentController::class, 'edit']);
+
+Route::put('/shipments/{id}',[ShipmentController::class, 'update']);

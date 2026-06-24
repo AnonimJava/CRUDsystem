@@ -1,0 +1,23 @@
+@use "themes/light";
+@use "themes/dark";
+
+@use "layout/navbar";
+@use "layout/dashboard";
+
+@use "components/cards";
+@use "components/buttons";
+@use "components/tables";
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+
+    transition: all .3s ease;
+}
+
+.card {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
