@@ -6,25 +6,25 @@
 
 <div class="row">
 
-<x-stat-card
-    title="Total Shipments"
-    value="42"
-/>
+    <x-stat-card
+        title="Total Shipments"
+        :value="$stats['total']"
+    />
 
-<x-stat-card
-    title="Delivered"
-    value="25"
-/>
+    <x-stat-card
+        title="Delivered"
+        :value="$stats['delivered']"
+    />
 
-<x-stat-card
-    title="In Transit"
-    value="12"
-/>
+    <x-stat-card
+        title="In Transit"
+        :value="$stats['transit']"
+    />
 
-<x-stat-card
-    title="Warehouse"
-    value="5"
-/>
+    <x-stat-card
+        title="Warehouse"
+        :value="$stats['warehouse']"
+    />
 
 </div>
 

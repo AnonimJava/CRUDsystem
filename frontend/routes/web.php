@@ -3,10 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Shipment;
 use App\Http\Controllers\ShipmentController;
+use App\Http\Controllers\DashboardController;
 
-Route::get('/', function () {
-    return view('dashboard');
-});
+Route::get('/', [DashboardController::class, 'index']);
 
 Route::get('/seed', function () {
 

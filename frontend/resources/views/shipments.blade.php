@@ -11,6 +11,110 @@
     Create Shipment
 </a>
 
+<form
+    method="GET"
+    action="/shipments"
+    class="row g-2 mb-3"
+>
+
+    <div class="col-md-6">
+
+        <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="Search tracking number..."
+            value="{{ request('search') }}"
+        >
+
+    </div>
+
+    <div class="col-auto">
+
+        <button
+            class="btn btn-primary"
+        >
+            Search
+        </button>
+
+    </div>
+
+</form>
+
+<form
+    method="GET"
+    action="/shipments"
+    class="row g-3 mb-4 align-items-end"
+>
+
+    <div class="col-md-5">
+        <label class="form-label">
+            Search Tracking Number
+        </label>
+
+        <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="KN000001..."
+            value="{{ request('search') }}"
+        >
+    </div>
+
+    <div class="col-md-4">
+        <label class="form-label">
+            Status
+        </label>
+
+        <select
+            name="status"
+            class="form-select"
+        >
+            <option value="">All Statuses</option>
+
+            <option
+                value="Created"
+                {{ request('status') == 'Created' ? 'selected' : '' }}
+            >
+                Created
+            </option>
+
+            <option
+                value="In Warehouse"
+                {{ request('status') == 'In Warehouse' ? 'selected' : '' }}
+            >
+                In Warehouse
+            </option>
+
+            <option
+                value="In Transit"
+                {{ request('status') == 'In Transit' ? 'selected' : '' }}
+            >
+                In Transit
+            </option>
+
+            <option
+                value="Delivered"
+                {{ request('status') == 'Delivered' ? 'selected' : '' }}
+            >
+                Delivered
+            </option>
+
+        </select>
+    </div>
+
+    <div class="col-md-3 d-grid">
+
+        <button
+            class="btn btn-primary"
+        >
+            Search
+        </button>
+
+    </div>
+
+</form>
+
 <table class="table">
 
     <thead>

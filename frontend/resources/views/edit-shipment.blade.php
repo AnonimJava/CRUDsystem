@@ -28,7 +28,7 @@
             type="text"
             name="sender"
             class="form-control"
-            value="{{ $shipment->sender }}"
+            value="{{ old('sender', $shipment->sender) }}"
         >
     </div>
 
@@ -64,12 +64,17 @@
 
     <div class="mb-3">
         <label>Status</label>
-        <input
-            type="text"
+        <select
             name="status"
             class="form-control"
-            value="{{ $shipment->status }}"
         >
+            <option value="Created" {{ $shipment->status == 'Created' ? 'selected' : '' }}>
+                Created
+            </option>
+            <option>In Warehouse</option>
+            <option>In Transit</option>
+            <option>Delivered</option>
+        </select>
     </div>
 
     <button

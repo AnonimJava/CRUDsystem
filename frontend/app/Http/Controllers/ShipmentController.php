@@ -7,11 +7,29 @@ use Illuminate\Http\Request;
 
 class ShipmentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $shipments = Shipment::all();
+        $query = Shipment::query();
+
+        if($request->filled('search')){
+            $query->where(
+                'tracking_number',
+                'like',
+                '%' . $request->search . '%'
+            );
+        }
+
+        if($request->filled('status')) {
+
+            $query->where('status',
+            $request->status
+            );
+        }
+
+        $shipments = $query->get();
 
         return view('shipments', compact('shipments'));
+
     }
 
 
@@ -22,15 +40,26 @@ class ShipmentController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'tracking_number' => 'required|string|max:20',
+            'sender' => 'required|string|max:100',
+            'receiver' => 'required|string|max:100',
+            'origin' => 'required|string|max:100',
+            'destination' => 'required|string|max:100',
+            'status' => 'required|string|max:50',
+        ]);
+
         Shipment::create([
             'tracking_number' => $request->tracking_number,
             'sender' => $request->sender,
             'receiver' => $request->receiver,
             'origin' => $request->origin,
             'destination' => $request->destination,
-            'status' => $request->status
+            'status' => $request->status,
         ]);
-        return redirect('/shipments');
+
+        return redirect('/shipments')
+            ->with('success', 'Shipment created successfully.');
     }
 
     public function destroy($id)
@@ -39,7 +68,8 @@ class ShipmentController extends Controller
 
         $shipment->delete();
 
-        return redirect('/shipments');
+        return redirect('/shipments')
+            ->with('success', 'Shipment deleted successfully.');
     }
 
     public function edit($id)
@@ -57,6 +87,16 @@ class ShipmentController extends Controller
         $id
     )
     {
+
+        $request->validate([
+            'tracking_number' => 'required|string|max:20',
+            'sender' => 'required|string|max:100',
+            'receiver' => 'required|string|max:100',
+            'origin' => 'required|string|max:100',
+            'destination' => 'required|string|max:100',
+            'status' => 'required|string|max:50',
+        ]);
+
         $shipment =
             Shipment::findOrFail($id);
 
@@ -80,7 +120,8 @@ class ShipmentController extends Controller
                 => $request->status
         ]);
 
-        return redirect('/shipments');
+        return redirect('/shipments')
+            ->with('success', 'Shipment updated successfully.');
     }
 }
 

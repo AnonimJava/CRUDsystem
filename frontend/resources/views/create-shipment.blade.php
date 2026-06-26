@@ -4,6 +4,25 @@
 
 <h1>Create Shipment</h1>
 
+
+@if ($errors->any())
+
+<div class="alert alert-danger">
+
+    <ul class="mb-0">
+
+        @foreach ($errors->all() as $error)
+
+            <li>{{ $error }}</li>
+
+        @endforeach
+
+    </ul>
+
+</div>
+
+@endif
+
 <form method="POST" action="/shipments">
 
     @csrf
@@ -23,6 +42,7 @@
             type="text"
             name="sender"
             class="form-control"
+            value="{{ old('sender') }}"
         >
     </div>
 
