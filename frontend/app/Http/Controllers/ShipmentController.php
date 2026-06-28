@@ -11,7 +11,7 @@ class ShipmentController extends Controller
     {
         $query = Shipment::query();
 
-        if($request->filled('search')){
+        if ($request->filled('search')) {
             $query->where(
                 'tracking_number',
                 'like',
@@ -19,19 +19,37 @@ class ShipmentController extends Controller
             );
         }
 
-        if($request->filled('status')) {
-
-            $query->where('status',
-            $request->status
+        if ($request->filled('status')) {
+            $query->where(
+                'status',
+                $request->status
             );
         }
 
-        $shipments = $query->get();
+        $sort = $request->get(
+            'sort',
+            'tracking_number'
+        );
 
-        return view('shipments', compact('shipments'));
+        $direction = $request->get(
+            'direction',
+            'asc'
+        );
 
+        $query->orderBy(
+            $sort,
+            $direction
+        );
+
+        $shipments = $query
+            ->paginate(10)
+            ->withQueryString();
+
+        return view(
+            'shipments',
+            compact('shipments')
+        );
     }
-
 
     public function create()
     {

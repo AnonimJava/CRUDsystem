@@ -5,29 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logistics Tracking System</title>
 
-    @vite(['resources/scss/app.scss',
-           'resources/js/app.js'
+    @vite([
+        'resources/scss/app.scss',
+        'resources/js/app.js'
     ])
 </head>
+
 <body>
 
-    @include('partials.navbar')
+@include('partials.navbar')
 
 <div class="container mt-4">
-<div>
 
     @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show">
 
             {{ session('success') }}
 
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+            ></button>
 
         </div>
-
     @endif
-
-    </div>
 
     @yield('content')
 

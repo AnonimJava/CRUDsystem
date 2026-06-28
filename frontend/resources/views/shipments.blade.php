@@ -119,7 +119,23 @@
 
     <thead>
         <tr>
-            <th>Tracking Number</th>
+            <th>
+
+                <a
+                    href="{{ route('shipments.index', [
+                        'sort' => 'tracking_number',
+                        'direction' => request('direction') == 'asc' ? 'desc' : 'asc',
+                        'search' => request('search'),
+                        'status' => request('status')
+                    ]) }}"
+                    class="text-decoration-none text-dark"
+                >
+
+                    Tracking Number
+
+                </a>
+
+            </th>
             <th>Sender</th>
             <th>Receiver</th>
             <th>Status</th>
@@ -135,7 +151,35 @@
             <td>{{ $shipment->tracking_number }}</td>
             <td>{{ $shipment->sender }}</td>
             <td>{{ $shipment->receiver }}</td>
-            <td>{{ $shipment->status }}</td>
+            <td>
+
+            @if($shipment->status == 'Created')
+
+                <span class="badge bg-secondary">
+                    Created
+                </span>
+
+            @elseif($shipment->status == 'In Warehouse')
+
+                <span class="badge bg-primary">
+                    In Warehouse
+                </span>
+
+            @elseif($shipment->status == 'In Transit')
+
+                <span class="badge bg-warning text-dark">
+                    In Transit
+                </span>
+
+            @elseif($shipment->status == 'Delivered')
+
+                <span class="badge bg-success">
+                    Delivered
+                </span>
+
+            @endif
+
+            </td>
 
             <td>
 
@@ -179,5 +223,9 @@
     </tbody>
 
 </table>
+
+<div class="mt-4">
+    {{ $shipments->links() }}
+</div>
 
 @endsection

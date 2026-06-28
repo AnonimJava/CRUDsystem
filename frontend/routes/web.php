@@ -1,34 +1,34 @@
 <?php
-
-use Illuminate\Support\Facades\Route;
-use App\Models\Shipment;
 use App\Http\Controllers\ShipmentController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 
-Route::get('/', [DashboardController::class, 'index']);
-
-Route::get('/seed', function () {
-
-    Shipment::create([
-        'tracking_number' => 'KN000001',
-        'sender' => 'John',
-        'receiver' => 'Alice',
-        'origin' => 'Tallinn',
-        'destination' => 'Riga',
-        'status' => 'In Transit'
-    ]);
-
-    return 'Shipment created!';
+Route::get('/', function () {
+    return redirect('/dashboard');
 });
 
-Route::get('/shipments', [ShipmentController::class, 'index']);
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
-Route::get('/shipments/create', [ShipmentController::class, 'create']);
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-Route::post('/shipments', [ShipmentController::class, 'store']);
+    Route::get('/shipments', [ShipmentController::class, 'index'])
+        ->name('shipments.index');
 
-Route::delete('/shipments/{id}', [ShipmentController::class, 'destroy']);
+    Route::get('/shipments/create', [ShipmentController::class, 'create']);
 
-Route::get('/shipments/{id}/edit',[ShipmentController::class, 'edit']);
+    Route::post('/shipments', [ShipmentController::class, 'store']);
 
-Route::put('/shipments/{id}',[ShipmentController::class, 'update']);
+    Route::get('/shipments/{id}/edit', [ShipmentController::class, 'edit']);
+
+    Route::put('/shipments/{id}', [ShipmentController::class, 'update']);
+
+    Route::delete('/shipments/{id}', [ShipmentController::class, 'destroy']);
+});
+
+require __DIR__.'/auth.php';

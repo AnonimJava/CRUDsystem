@@ -16,7 +16,7 @@ class DashboardController extends Controller
 
             'transit' => Shipment::where('status', 'In Transit')->count(),
 
-            'warehouse' => Shipment::where('status', 'In Wharehouse')->count(),
+            'warehouse' => Shipment::where('status', 'In Warehouse')->count(),
         ];
 
         return view(
